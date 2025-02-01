@@ -27,6 +27,6 @@ app.use(clientRouter)
 app.use(courseRouter)
 app.use(quizwRouter)
 
-app.listen(process.env.PORT, () => {
-    console.log("server is running on port " + process.env.PORT)
+app.listen(8080, () => {
+    console.log("server is running on port 8080")
 })
