@@ -3,7 +3,7 @@
 
 ## Overview
 
-SmartPath is a backend API for an educational platform that allows users to manage educational courses and quizzes. This REST API service provides CRUD operations for courses and quizzes linked to those courses.
+Backend API for an educational platform that allows users to manage educational courses and quizzes. This REST API service provides CRUD operations for courses and quizzes linked to those courses.
 
 ## Problem Statement
 
