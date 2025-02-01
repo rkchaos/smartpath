@@ -1,0 +1,819 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "**Warning:** All routes are secured with authentication, so users must log in first.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "delete": {
+        "summary": "Logout current user",
+        "description": "**Note** :User must be authenticated.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/alluser": {
+      "get": {
+        "summary": "Get all user",
+        "description": "**Note** :User must be authenticated.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/createCourse": {
+      "post": {
+        "summary": "Create a new course",
+        "description": "This endpoint allows creating a new course. **Note:** User must be authenticated.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "course",
+            "required": true,
+            "description": "Course data for creating a new course(**you can make multiple chapters in a course because chapters is an array**)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "example": "BTECH"
+                },
+                "chapters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "example": "chapter 1"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "This is chapter one"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "DEMO FOR CBSE"
+                      },
+                      "videoLink": {
+                        "type": "string",
+                        "example": "www.youtube.com"
+                      },
+                      "duration": {
+                        "type": "integer",
+                        "example": 1
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "DEMO FOR CBSE"
+                },
+                "duration": {
+                  "type": "integer",
+                  "example": 5
+                },
+                "instructorName": {
+                  "type": "string",
+                  "example": "Rajchoudhary"
+                },
+                "language": {
+                  "type": "string",
+                  "example": "English"
+                },
+                "level": {
+                  "type": "string",
+                  "example": "intermediate"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 1
+                },
+                "status": {
+                  "type": "string",
+                  "example": "unpublished"
+                },
+                "visibility": {
+                  "type": "string",
+                  "example": "private"
+                }
+              },
+              "required": [
+                "category",
+                "chapters",
+                "description",
+                "duration",
+                "instructorName",
+                "language",
+                "level",
+                "price",
+                "status",
+                "visibility"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Course created successfully"
+          },
+          "400": {
+            "description": "Bad Request - Missing or invalid course data"
+          },
+          "401": {
+            "description": "Unauthorized - User must log in"
+          },
+          "402": {
+            "description": "Payment Required - Insufficient balance to create the course"
+          },
+          "409": {
+            "description": "Conflict - Course already exists"
+          },
+          "503": {
+            "description": "Service Unavailable - Server error or maintenance"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/getAllCourses": {
+      "get": {
+        "summary": "Retrieve all courses",
+        "description": "This endpoint allows users to retrieve a list of all available courses. **Note:** The user must be authenticated.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Courses retrieved successfully"
+          },
+          "404": {
+            "description": "No courses found"
+          },
+          "401": {
+            "description": "Unauthorized - User must log in"
+          }
+        },
+        "503": {
+          "description": "Service Unavailable - Server error or maintenance"
+        }
+      }
+    },
+    "/retriveCourses/{id}": {
+      "get": {
+        "summary": "Get course by id",
+        "description": "Example -> place _id in description 679bb4336dffaa1e9ebaf4c5. **Note:** User must be authenticated.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the course to retriveCourse",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/updateCourses/{id}": {
+      "put": {
+        "summary": "Update course by ID",
+        "description": "This endpoint allows the user to update a course by its ID. The course ID is provided in the URL, and the updated course data is sent in the request body. **Note:** User must be authenticated.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the course to update",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "courseData",
+            "in": "body",
+            "required": true,
+            "description": "Course data for updating the course (**you can make multiple chapters in a course because chapter is an array**)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "example": "CBSE"
+                },
+                "chapters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "example": "chapter 1"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "This is chapter"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "DEMO FOR"
+                      },
+                      "videoLink": {
+                        "type": "string",
+                        "example": "www.youtube.com"
+                      },
+                      "duration": {
+                        "type": "integer",
+                        "example": 1
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "DEMO FOR CBSE"
+                },
+                "duration": {
+                  "type": "integer",
+                  "example": 5
+                },
+                "instructorName": {
+                  "type": "string",
+                  "example": "Raj kumar siya"
+                },
+                "language": {
+                  "type": "string",
+                  "example": "English"
+                },
+                "level": {
+                  "type": "string",
+                  "example": "intermediate"
+                },
+                "price": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "status": {
+                  "type": "string",
+                  "example": "unpublished"
+                },
+                "visibility": {
+                  "type": "string",
+                  "example": "private"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-01-30T17:22:47.315Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-01-30T17:22:47.315Z"
+                }
+              },
+              "required": [
+                "category",
+                "chapters",
+                "description",
+                "duration",
+                "instructorName",
+                "language",
+                "level",
+                "price",
+                "status",
+                "visibility"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course updated successfully"
+          },
+          "400": {
+            "description": "Bad Request - Missing ID or invalid data"
+          },
+          "401": {
+            "description": "Unauthorized - User must log in"
+          },
+          "404": {
+            "description": "Not Found - Course not found"
+          },
+          "503": {
+            "description": "Service Unavailable - Server error or maintenance"
+          }
+        }
+      }
+    },
+    "/deleteCourse/{id}": {
+      "delete": {
+        "summary": "Delete courses by id",
+        "description": "This endpoint allows the user to delete a course by its ID  **Note**: User must be authenticated.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description":"course id to delete course",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/courses/{courseId}/quizzess": {
+      "post": {
+        "summary": "Create a quiz for a course",
+        "description": "This endpoints allow user to create a quize for a course  **Note**: User must be authenticated.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "description":"courseId ",
+            "type": "string"
+          },
+          {
+            "name": "quizData",
+            "in": "body",
+            "required": true,
+            "description": "Quiz data to create a quiz for the course(**you can make multiple question in an questions array**)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "questions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "question": {
+                        "type": "string",
+                        "description": "The question text",
+                        "example": "What is the capital of France?"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The list of possible answers for the question. The correctAnswer must be one of these options.",
+                        "example": [
+                          "London",
+                          "Berlin",
+                          "Paris",
+                          "Madrid"
+                        ]
+                      },
+                      "correctAnswer": {
+                        "type": "string",
+                        "description": "The correct answer for the question",
+                        "example": "Paris"
+                      }
+                    },
+                    "required": [
+                      "question",
+                      "options",
+                      "correctAnswer"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "questions"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/courses/{coursesId}/quizzes": {
+      "get": {
+        "summary": " Retrieve all quizzes for a course",
+        "description": "This endpoints allow user to Retrieve all quizzes for a course **Note**: User must be authenticated",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "coursesId",
+            "in": "path",
+            "required": true,
+            "description":"courseId ",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/quizzes/{id}": {
+      "get": {
+        "summary": "Retrieve a specific quiz",
+        "description": "This endpoints allow user to Retrieve a specific quize for a course **Note**: User must be authenticated",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description":"quiz id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update quize by id",
+        "description": "This endpoints allow user to Update a specific quize for a course **Note**: User must be authenticated",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description":"quiz id",
+            "type": "string"
+          },
+          {
+            "name": "quizData",
+            "in": "body",
+            "required": true,
+            "description": "Quiz data to update a specific quiz for the course(**you can make multiple question in an questions array**)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "questions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "question": {
+                        "type": "string",
+                        "description": "The question text",
+                        "example": "What is the capital of India?"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The list of possible answers for the question. The correctAnswer must be one of these options.",
+                        "example": [
+                          "London",
+                          "New Delhi",
+                          "Paris",
+                          "Madrid"
+                        ]
+                      },
+                      "correctAnswer": {
+                        "type": "string",
+                        "description": "The correct answer for the question. It must match one of the values in the options array.",
+                        "example": "New Delhi"
+                      }
+                    },
+                    "required": [
+                      "question",
+                      "options",
+                      "correctAnswer"
+                    ]
+                  },
+                  "description": "An array of quiz questions, each containing a question, options, and the correct answer."
+                }
+              },
+              "required": [
+                "questions"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete quize by id",
+        "description": "This endpoints allow user to delete a specific quize for a course **Note**: User must be authenticated",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description":"quiz id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/submit/{id}": {
+      "post": {
+        "summary": "Submit the quiz and get score",
+        "description": "This endpoints allow user to submit quize **Note**: User must be authenticated",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description":"quize id",
+            "type": "string"
+          },
+          {
+            "name": "answer",
+            "in": "body",
+            "required": true,
+            "description": "User answers to the quiz questions(**answer:{questionId: answer pairs.})**",
+            "example":"https://drive.google.com/file/d/1x-kTug27eVOhAuZto_YNSWPltkmPrCW_/view?usp=sharing(**use this link to see what to send in answer**)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "answer": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "An object where keys are question IDs and values are the user's selected answers.",
+                  "example": {
+                    "679be5498cd2d40ef09c41a7": "Paris",
+                    "679be5498cd2d40ef09c41a8": "Mars"
+                  }
+                }
+              },
+              "required": [
+                "answer"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    }
+  }
+}
