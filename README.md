@@ -40,7 +40,7 @@ The API offers the following functionalities:
 
 Access the Swagger documentation at:
 ```
-<your_port_number>/api-docs
+<your_port>/api-docs
 ```
 
 ## Authentication
